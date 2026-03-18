@@ -1,77 +1,56 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import AppNav from "../../components/AppNav";
 import { signupApi } from "../../lib/api";
+import { useRouter } from "next/navigation";
 
 export default function SignupPage() {
+  const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
-  const [isError, setIsError] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = async (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setError("");
 
     try {
-      setIsError(false);
-      const result = await signupApi({ name, email, password });
-      setMessage(result.message);
-      setName("");
-      setEmail("");
-      setPassword("");
+      await signupApi({ name, email, password });
+      router.push("/login");
     } catch (error) {
-      setIsError(true);
-      setMessage(error instanceof Error ? error.message : "Signup failed");
+      setError(error instanceof Error ? error.message : "Signup failed");
     }
   };
 
   return (
-    <main className="container">
-      <div className="card">
-        <h1>Signup Page</h1>
-        <AppNav />
-
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="name">Name</label>
-            <input
-              id="name"
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-          </div>
-
-          <div>
-            <label htmlFor="email">Email</label>
-            <input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-
-          <div>
-            <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-
-          <button type="submit">Create Account</button>
-        </form>
-
-        {message ? <p className={`message ${isError ? "error" : ""}`}>{message}</p> : null}
-      </div>
-    </main>
+    <section className="card page-wrap">
+      <h1>Signup</h1>
+      <form onSubmit={handleSubmit} className="form-grid">
+        <input
+          type="text"
+          placeholder="Name"
+          value={name}
+          onChange={(event) => setName(event.target.value)}
+          required
+        />
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+          required
+        />
+        <button type="submit">Signup</button>
+      </form>
+      {error ? <p className="error-text">{error}</p> : null}
+    </section>
   );
 }

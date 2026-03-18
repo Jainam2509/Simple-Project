@@ -1,64 +1,59 @@
 "use client";
 
-import { FormEvent, useState } from "react";
-import AppNav from "../../components/AppNav";
+import { KeyboardEvent, useState } from "react";
 import { loginApi, saveLoggedInUser } from "../../lib/api";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
-  const [isError, setIsError] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = async (event: FormEvent) => {
-    event.preventDefault();
+  const handleLogin = async () => {
+    setError("");
 
     try {
-      setIsError(false);
       const result = await loginApi({ email, password });
-      // Save user in localStorage for role-based UI and simple protected pages.
       saveLoggedInUser(result.user);
-      setMessage(`${result.message} | Welcome, ${result.user.name} (${result.user.role})`);
+      router.push(result.user.role === "admin" ? "/admin" : "/");
     } catch (error) {
-      setIsError(true);
-      setMessage(error instanceof Error ? error.message : "Login failed");
+      setError(error instanceof Error ? error.message : "Login failed");
+    }
+  };
+
+  const handleEnter = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      void handleLogin();
     }
   };
 
   return (
-    <main className="container">
-      <div className="card">
-        <h1>Login Page</h1>
-        <AppNav />
-
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="email">Email</label>
-            <input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-
-          <div>
-            <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-
-          <button type="submit">Login</button>
-        </form>
-
-        {message ? <p className={`message ${isError ? "error" : ""}`}>{message}</p> : null}
+    <section className="card page-wrap">
+      <h1>Login</h1>
+      <div className="form-grid">
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+          onKeyDown={handleEnter}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+          onKeyDown={handleEnter}
+          required
+        />
+        <button type="button" onClick={() => void handleLogin()}>
+          Login
+        </button>
       </div>
-    </main>
+      {error ? <p className="error-text">{error}</p> : null}
+    </section>
   );
 }

@@ -32,18 +32,24 @@ export default function AppNav() {
   };
 
   return (
-    <nav>
-      {!isLoggedIn && pathname === "/login" ? <Link href="/signup">Signup</Link> : null}
-      {!isLoggedIn && pathname !== "/login" ? <Link href="/login">Login</Link> : null}
+    <nav className="navbar">
+      <Link href="/" className="brand">
+        SimpleFlow
+      </Link>
 
-      {isLoggedIn ? <Link href="/">Home</Link> : null}
-      {isLoggedIn ? <Link href="/contact">Contact Us</Link> : null}
-      {userRole === "admin" ? <Link href="/admin">Admin Dashboard</Link> : null}
-      {isLoggedIn ? (
-        <button type="button" className="nav-button" onClick={handleLogout}>
-          Logout
-        </button>
-      ) : null}
+      <div className="nav-links">
+        {!isLoggedIn && pathname !== "/login" ? <Link href="/login">Login</Link> : null}
+        {!isLoggedIn && pathname === "/login" ? <Link href="/signup">Signup</Link> : null}
+
+        {isLoggedIn ? <Link href="/contact">Contact</Link> : null}
+        {userRole === "admin" ? <Link href="/admin">Admin</Link> : null}
+
+        {isLoggedIn ? (
+          <button type="button" className="logout-btn" onClick={handleLogout}>
+            Logout
+          </button>
+        ) : null}
+      </div>
     </nav>
   );
 }
