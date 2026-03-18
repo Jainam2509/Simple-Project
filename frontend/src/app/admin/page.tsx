@@ -1,11 +1,13 @@
 "use client";
 
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getContactsApi, getUsersApi } from "../../lib/api";
+import AppNav from "../../components/AppNav";
+import { getContactsApi, getLoggedInUser, getUsersApi } from "../../lib/api";
 import { Contact, User } from "../../types";
 
 export default function AdminDashboardPage() {
+  const router = useRouter();
   const [users, setUsers] = useState<User[]>([]);
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [loading, setLoading] = useState(true);
@@ -13,6 +15,13 @@ export default function AdminDashboardPage() {
 
   useEffect(() => {
     const loadDashboardData = async () => {
+      const currentUser = getLoggedInUser();
+
+      if (!currentUser || currentUser.role !== "admin") {
+        router.replace("/login");
+        return;
+      }
+
       try {
         // Fetch both endpoints for the admin dashboard.
         const [usersResponse, contactsResponse] = await Promise.all([getUsersApi(), getContactsApi()]);
@@ -27,18 +36,13 @@ export default function AdminDashboardPage() {
     };
 
     loadDashboardData();
-  }, []);
+  }, [router]);
 
   return (
     <main className="container">
       <div className="card">
         <h1>Admin Dashboard</h1>
-        <nav>
-          <Link href="/">Home</Link>
-          <Link href="/signup">Signup</Link>
-          <Link href="/login">Login</Link>
-          <Link href="/contact">Contact Us</Link>
-        </nav>
+        <AppNav />
 
         {loading ? <p>Loading users and contacts...</p> : null}
         {error ? <p className="message error">{error}</p> : null}

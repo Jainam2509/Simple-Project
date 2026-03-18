@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { getAllUsers, loginUser, signupUser } from "../controllers/userController";
+import { checkAdminRole } from "../middleware/checkAdminRole";
 
 const router = Router();
 
@@ -15,6 +16,6 @@ router.post("/signup", signupUser);
 router.post("/login", loginUser);
 
 // Admin route to fetch all users.
-router.get("/", getAllUsers);
+router.get("/", checkAdminRole, getAllUsers);
 
 export default router;

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import AppNav from "../components/AppNav";
 
 export default function HomePage() {
   return (
@@ -9,13 +9,7 @@ export default function HomePage() {
           This project demonstrates the complete flow: Frontend to Backend to MongoDB and back to Frontend.
         </p>
 
-        <nav>
-          <Link href="/">Home</Link>
-          <Link href="/signup">Signup</Link>
-          <Link href="/login">Login</Link>
-          <Link href="/contact">Contact Us</Link>
-          <Link href="/admin">Admin Dashboard</Link>
-        </nav>
+        <AppNav />
 
         <h2>What you can test</h2>
         <p>1. Create user from Signup page</p>

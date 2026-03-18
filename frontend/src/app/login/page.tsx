@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { FormEvent, useState } from "react";
-import { loginApi } from "../../lib/api";
+import AppNav from "../../components/AppNav";
+import { loginApi, saveLoggedInUser } from "../../lib/api";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -16,6 +16,8 @@ export default function LoginPage() {
     try {
       setIsError(false);
       const result = await loginApi({ email, password });
+      // Save user in localStorage for role-based UI and simple protected pages.
+      saveLoggedInUser(result.user);
       setMessage(`${result.message} | Welcome, ${result.user.name} (${result.user.role})`);
     } catch (error) {
       setIsError(true);
@@ -27,12 +29,7 @@ export default function LoginPage() {
     <main className="container">
       <div className="card">
         <h1>Login Page</h1>
-        <nav>
-          <Link href="/">Home</Link>
-          <Link href="/signup">Signup</Link>
-          <Link href="/contact">Contact Us</Link>
-          <Link href="/admin">Admin Dashboard</Link>
-        </nav>
+        <AppNav />
 
         <form onSubmit={handleSubmit}>
           <div>

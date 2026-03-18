@@ -71,6 +71,21 @@ nav a:hover {
   border-color: var(--primary);
 }
 
+.nav-button {
+  text-decoration: none;
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  color: var(--text);
+  background: #fff;
+  cursor: pointer;
+}
+
+.nav-button:hover {
+  border-color: var(--primary);
+  background: #fff;
+}
+
 form {
   display: grid;
   gap: 0.85rem;

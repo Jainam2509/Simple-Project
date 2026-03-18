@@ -18,6 +18,9 @@ Frontend (Next.js) -> Backend API (Express) -> MongoDB (Mongoose) -> Backend Res
 - Admin Dashboard page
 - Contact form submission flow (`POST /api/contacts`)
 - Basic role system (`user` and `admin`)
+- Logout button (clears localStorage and redirects to login)
+- Admin link visible only for admin role
+- Admin page protected on frontend and backend
 
 ## Backend API Endpoints
 
@@ -87,6 +90,13 @@ db.users.insertOne({
 })
 ```
 
+Or run the seed script:
+
+```bash
+cd backend
+npm run seed:admin
+```
+
 ## 5. Test Full Flow
 
 1. Open frontend home page.
@@ -113,3 +123,4 @@ Examples:
 - This project intentionally has no authentication security (as requested).
 - Passwords are stored as plain text for learning/demo only.
 - Console logs are added in app, routes, and controllers to show request flow clearly.
+- Admin-only backend checks are done with the `x-user-role` request header for simplicity.

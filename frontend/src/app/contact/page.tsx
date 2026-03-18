@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { FormEvent, useState } from "react";
+import AppNav from "../../components/AppNav";
 import { createContactApi } from "../../lib/api";
 
 export default function ContactPage() {
@@ -34,12 +34,7 @@ export default function ContactPage() {
     <main className="container">
       <div className="card">
         <h1>Contact Us Page</h1>
-        <nav>
-          <Link href="/">Home</Link>
-          <Link href="/signup">Signup</Link>
-          <Link href="/login">Login</Link>
-          <Link href="/admin">Admin Dashboard</Link>
-        </nav>
+        <AppNav />
 
         <form onSubmit={handleSubmit}>
           <div>

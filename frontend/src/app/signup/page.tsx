@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { FormEvent, useState } from "react";
+import AppNav from "../../components/AppNav";
 import { signupApi } from "../../lib/api";
 
 export default function SignupPage() {
@@ -31,12 +31,7 @@ export default function SignupPage() {
     <main className="container">
       <div className="card">
         <h1>Signup Page</h1>
-        <nav>
-          <Link href="/">Home</Link>
-          <Link href="/login">Login</Link>
-          <Link href="/contact">Contact Us</Link>
-          <Link href="/admin">Admin Dashboard</Link>
-        </nav>
+        <AppNav />
 
         <form onSubmit={handleSubmit}>
           <div>
