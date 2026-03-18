@@ -1,0 +1,158 @@
+:root {
+  --bg: #f7f9fc;
+  --card-bg: #ffffff;
+  --text: #1c2430;
+  --muted: #5f6c7b;
+  --primary: #1f6feb;
+  --primary-dark: #1454b8;
+  --border: #dbe2ea;
+  --success: #198754;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background: linear-gradient(180deg, #eef3fb 0%, #f8fbff 100%);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 24px rgba(17, 24, 39, 0.06);
+}
+
+h1 {
+  margin-bottom: 1rem;
+  font-size: 2rem;
+}
+
+h2 {
+  margin: 1rem 0;
+  font-size: 1.35rem;
+}
+
+p {
+  margin-bottom: 1rem;
+  color: var(--muted);
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+nav a {
+  text-decoration: none;
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  color: var(--text);
+  background: #fff;
+}
+
+nav a:hover {
+  border-color: var(--primary);
+}
+
+form {
+  display: grid;
+  gap: 0.85rem;
+}
+
+label {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+input,
+textarea {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.65rem 0.8rem;
+  font-size: 1rem;
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+button {
+  width: fit-content;
+  border: none;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+button:hover {
+  background: var(--primary-dark);
+}
+
+.message {
+  padding: 0.65rem 0.8rem;
+  border-radius: 8px;
+  margin-top: 0.5rem;
+  background: #e9f7ef;
+  color: var(--success);
+  border: 1px solid #c7ebd7;
+}
+
+.error {
+  background: #ffefef;
+  color: #b42318;
+  border: 1px solid #f3c7c7;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  margin-top: 1rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 520px;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 0.65rem;
+  border-bottom: 1px solid var(--border);
+}
+
+th {
+  background: #f1f5fa;
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 1rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+}
