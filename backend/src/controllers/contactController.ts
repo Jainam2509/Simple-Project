@@ -4,6 +4,7 @@ import Contact from "../models/Contact";
 export const createContact = async (req: Request, res: Response): Promise<void> => {
   try {
     console.log("[Controller] createContact called");
+    console.log("Contact");
 
     const { name, email, message } = req.body;
 
